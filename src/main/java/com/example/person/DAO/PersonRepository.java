@@ -41,6 +41,7 @@ public class PersonRepository implements PersonRepositoryInterface {
         List<String> listJob =
                 PersonDB.personList.stream()
                         .map(Person::getJob)
+                        .distinct()
                         .sorted().toList();
         return listJob;
     }
@@ -49,6 +50,7 @@ public class PersonRepository implements PersonRepositoryInterface {
     public List<String> getSortedCities() {
         return PersonDB.personList.stream()
                 .map(Person::getCity)
+                .distinct()
                 .sorted().toList();
     }
 

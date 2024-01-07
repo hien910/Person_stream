@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,110 +16,152 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/person")
+//@RequestMapping("/person")
 public class PersonController {
     @Autowired
     private PersonService personService;
-    @GetMapping("")
-    public void printListPeople() {
-        personService.printListPeople();
+
+    //    @GetMapping("")
+//    public void printListPeople() {
+//        personService.printListPeople();
+//    }
+    @GetMapping("/")
+    public String home() {
+        return "home";
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<Person>> getAll() {
-        return new ResponseEntity<>(personService.getAll(), HttpStatus.OK);
+    public String getAll(Model model) {
+
+        model.addAttribute("people", personService.getAll());
+        return "getAll";
+//        return new ResponseEntity<>(personService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/sortPeopleByFullName")
-    public ResponseEntity<List<Person>> sortPeopleByFullName(){
-        return new ResponseEntity<>(personService.sortPeopleByFullName(), HttpStatus.OK);
-    }
-    @GetMapping("/sortPeopleByFullNameReversed")
-    public ResponseEntity<List<Person>> sortPeopleByFullNameReversed(){
-        return new ResponseEntity<>(personService.sortPeopleByFullNameReversed(), HttpStatus.OK);
+    public String sortPeopleByFullName(Model model) {
+        List<Person> personList = personService.sortPeopleByFullName();
+        model.addAttribute("people", personList);
+        return "sortPeopleByFullName";
     }
     @GetMapping("/getSortedJobs")
-    public ResponseEntity<List<String>> getSortedJobs(){
-        return new ResponseEntity<>(personService.getSortedJobs(), HttpStatus.OK);
+    public String getSortedJobs(Model model) {
+
+        model.addAttribute("jobs", personService.getSortedJobs());
+        return "getSortedJobs";
     }
     @GetMapping("/getSortedCities")
-    public ResponseEntity<List<String>> getSortedCities(){
-        return new ResponseEntity<>(personService.getSortedCities(), HttpStatus.OK);
-    }
-    @GetMapping("/femaleNames")
-    public ResponseEntity<List<String>> femaleNames(){
-        return new ResponseEntity<>(personService.femaleNames(), HttpStatus.OK);
-    }
-    @GetMapping("/highestEarner")
-    public ResponseEntity<Person> highestEarner(){
-        return new ResponseEntity<>(personService.highestEarner(), HttpStatus.OK);
-    }
-    @GetMapping("/bornAfter1990")
-    public ResponseEntity<List<Person>> bornAfter1990(){
-        return new ResponseEntity<>(personService.bornAfter1990(), HttpStatus.OK);
-    }
-    @GetMapping("/averageSalary")
-    public ResponseEntity<Double> averageSalary(){
-        return new ResponseEntity<>(personService.averageSalary(), HttpStatus.OK);
-    }
-    @GetMapping("/averageAge")
-    public ResponseEntity<Double> averageAge(){
-        return new ResponseEntity<>(personService.averageAge(), HttpStatus.OK);
-    }
-    @GetMapping("/nameContains/{keyword}")
-    public ResponseEntity<List<Person>> nameContains(@PathVariable String keyword){
-        return new ResponseEntity<>(personService.nameContains(keyword), HttpStatus.OK);
-    }
-    @GetMapping("/sortedByAgeForMale")
-    public ResponseEntity<List<Person>> sortedByAgeForMale(){
-        return new ResponseEntity<>(personService.sortedByAgeForMale(), HttpStatus.OK);
-    }
-    @GetMapping("/aboveAverageSalary")
-    public ResponseEntity<List<Person>> aboveAverageSalary(){
-        return new ResponseEntity<>(personService.aboveAverageSalary(), HttpStatus.OK);
-    }
-    @GetMapping("/longestName")
-    public ResponseEntity<Person> longestName(){
-        return new ResponseEntity<>(personService.longestName(), HttpStatus.OK);
-    }
-    @GetMapping("/groupJobByCount")
-    public ResponseEntity<Map<String, Long>> groupJobByCount(){
-        return new ResponseEntity<>(personService.groupJobByCount(), HttpStatus.OK);
+    public String getSortedCities(Model model) {
+
+        model.addAttribute("cities", personService.getSortedCities());
+        return "getSortedCities";
     }
     @GetMapping("/groupPeopleByCity")
-    public ResponseEntity<Map<String, List<Person>>> groupPeopleByCity(){
-        return new ResponseEntity<>(personService.groupPeopleByCity(), HttpStatus.OK);
+    public String groupPeopleByCity(Model model) {
+
+        model.addAttribute("people", personService.groupPeopleByCity());
+        return "groupPeopleByCity";
     }
-    @GetMapping("/inSalaryRange")
-    public ResponseEntity <List<Person>> inSalaryRange(@RequestParam int a, @RequestParam int b){
-        return new ResponseEntity<>(personService.inSalaryRange(a, b), HttpStatus.OK);
+    @GetMapping("/groupJobByCount")
+    public String groupJobByCount(Model model) {
+
+        model.addAttribute("people", personService.groupJobByCount());
+        return "groupJobByCount";
     }
-    @GetMapping("/startsWith/{a}")
-    public ResponseEntity<List<Person>>groupPeopleByCity(@PathVariable String a){
-        return new ResponseEntity<>(personService.startsWith(a), HttpStatus.OK);
+    @GetMapping("/aboveAverageSalary")
+    public String aboveAverageSalary(Model model) {
+        model.addAttribute("averageSalary", personService.averageSalary());
+
+        model.addAttribute("people", personService.aboveAverageSalary());
+        return "aboveAverageSalary";
     }
-    @GetMapping("/sortByBirthYearDescending")
-    public ResponseEntity<List<Person>>sortByBirthYearDescending(){
-        return new ResponseEntity<>(personService.sortByBirthYearDescending(), HttpStatus.OK);
+    @GetMapping("/longestName")
+    public String longestName(Model model) {
+
+        model.addAttribute("person", personService.longestName());
+        return "longestName";
     }
-    @GetMapping("top5HighestPaid")
-    public ResponseEntity<List<Person>>top5HighestPaid(){
-        return new ResponseEntity<>(personService.top5HighestPaid(), HttpStatus.OK);
-    }
-    @GetMapping("inAgeRange")
-    public ResponseEntity<List<Person>>inAgeRange(@RequestParam int a, @RequestParam int b){
-        return new ResponseEntity<>(personService.inAgeRange(a,b), HttpStatus.OK);
-    }
-
-
-
-
-
-
-
-
-
-
+//
+//    @GetMapping("/sortPeopleByFullName")
+//    public ResponseEntity<List<Person>> sortPeopleByFullName(){
+//        return new ResponseEntity<>(personService.sortPeopleByFullName(), HttpStatus.OK);
+//    }
+//    @GetMapping("/sortPeopleByFullNameReversed")
+//    public ResponseEntity<List<Person>> sortPeopleByFullNameReversed(){
+//        return new ResponseEntity<>(personService.sortPeopleByFullNameReversed(), HttpStatus.OK);
+//    }
+//    @GetMapping("/getSortedJobs")
+//    public ResponseEntity<List<String>> getSortedJobs(){
+//        return new ResponseEntity<>(personService.getSortedJobs(), HttpStatus.OK);
+//    }
+//    @GetMapping("/getSortedCities")
+//    public ResponseEntity<List<String>> getSortedCities(){
+//        return new ResponseEntity<>(personService.getSortedCities(), HttpStatus.OK);
+//    }
+//    @GetMapping("/femaleNames")
+//    public ResponseEntity<List<String>> femaleNames(){
+//        return new ResponseEntity<>(personService.femaleNames(), HttpStatus.OK);
+//    }
+//    @GetMapping("/highestEarner")
+//    public ResponseEntity<Person> highestEarner(){
+//        return new ResponseEntity<>(personService.highestEarner(), HttpStatus.OK);
+//    }
+//    @GetMapping("/bornAfter1990")
+//    public ResponseEntity<List<Person>> bornAfter1990(){
+//        return new ResponseEntity<>(personService.bornAfter1990(), HttpStatus.OK);
+//    }
+//    @GetMapping("/averageSalary")
+//    public ResponseEntity<Double> averageSalary(){
+//        return new ResponseEntity<>(personService.averageSalary(), HttpStatus.OK);
+//    }
+//    @GetMapping("/averageAge")
+//    public ResponseEntity<Double> averageAge(){
+//        return new ResponseEntity<>(personService.averageAge(), HttpStatus.OK);
+//    }
+//    @GetMapping("/nameContains/{keyword}")
+//    public ResponseEntity<List<Person>> nameContains(@PathVariable String keyword){
+//        return new ResponseEntity<>(personService.nameContains(keyword), HttpStatus.OK);
+//    }
+//    @GetMapping("/sortedByAgeForMale")
+//    public ResponseEntity<List<Person>> sortedByAgeForMale(){
+//        return new ResponseEntity<>(personService.sortedByAgeForMale(), HttpStatus.OK);
+//    }
+//    @GetMapping("/aboveAverageSalary")
+//    public ResponseEntity<List<Person>> aboveAverageSalary(){
+//        return new ResponseEntity<>(personService.aboveAverageSalary(), HttpStatus.OK);
+//    }
+//    @GetMapping("/longestName")
+//    public ResponseEntity<Person> longestName(){
+//        return new ResponseEntity<>(personService.longestName(), HttpStatus.OK);
+//    }
+//    @GetMapping("/groupJobByCount")
+//    public ResponseEntity<Map<String, Long>> groupJobByCount(){
+//        return new ResponseEntity<>(personService.groupJobByCount(), HttpStatus.OK);
+//    }
+//    @GetMapping("/groupPeopleByCity")
+//    public ResponseEntity<Map<String, List<Person>>> groupPeopleByCity(){
+//        return new ResponseEntity<>(personService.groupPeopleByCity(), HttpStatus.OK);
+//    }
+//    @GetMapping("/inSalaryRange")
+//    public ResponseEntity <List<Person>> inSalaryRange(@RequestParam int a, @RequestParam int b){
+//        return new ResponseEntity<>(personService.inSalaryRange(a, b), HttpStatus.OK);
+//    }
+//    @GetMapping("/startsWith/{a}")
+//    public ResponseEntity<List<Person>>groupPeopleByCity(@PathVariable String a){
+//        return new ResponseEntity<>(personService.startsWith(a), HttpStatus.OK);
+//    }
+//    @GetMapping("/sortByBirthYearDescending")
+//    public ResponseEntity<List<Person>>sortByBirthYearDescending(){
+//        return new ResponseEntity<>(personService.sortByBirthYearDescending(), HttpStatus.OK);
+//    }
+//    @GetMapping("top5HighestPaid")
+//    public ResponseEntity<List<Person>>top5HighestPaid(){
+//        return new ResponseEntity<>(personService.top5HighestPaid(), HttpStatus.OK);
+//    }
+//    @GetMapping("inAgeRange")
+//    public ResponseEntity<List<Person>>inAgeRange(@RequestParam int a, @RequestParam int b){
+//        return new ResponseEntity<>(personService.inAgeRange(a,b), HttpStatus.OK);
+//    }
 
 
 }

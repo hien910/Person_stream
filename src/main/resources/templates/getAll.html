@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>getAll</title>
+</head>
+<body>
+<h1>Danh sách tất cả các người</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>fullName</th>
+        <th>job</th>
+        <th>gender</th>
+        <th>city</th>
+        <th>salary</th>
+        <th>birthday</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="person : ${people}">
+        <td th:text="${person.id}">1</td>
+        <td th:text="${person.fullName}">An</td>
+        <td th:text="${person.job}">It</td>
+        <td th:text="${person.gender}">male</td>
+        <td th:text="${person.city}">hanoi</td>
+        <td th:text="${person.salary}">2000</td>
+        <td th:text="${person.birthday}">2000/09/11</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

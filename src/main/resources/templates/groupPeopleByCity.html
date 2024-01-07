@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>groupPeopleByCity</title>
+</head>
+<body>
+<h1>Liệt kê các thành phố và danh sách người đang sống ở thành phố đó</h1>
+<table border="1">
+    <thead>
+    <tr>
+
+        <th>job</th>
+        <th>number of people</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="person : ${people}">
+        <td th:text="${person.key}">
+        </td>
+        <td>
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>fullName</th>
+                    <th>job</th>
+                    <th>gender</th>
+                    <th>city</th>
+                    <th>salary</th>
+                    <th>birthday</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${person.value}">
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.fullName}"></td>
+                    <td th:text="${p.job}"></td>
+                    <td th:text="${p.gender}"></td>
+                    <td th:text="${p.city}"></td>
+                    <td th:text="${p.salary}"></td>
+                    <td th:text="${p.birthday}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>
+
+
+</body>
+</html>
